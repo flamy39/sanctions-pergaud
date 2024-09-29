@@ -29,6 +29,32 @@
         .dark .text-gray-600 { color: #cbd5e0; }
         .dark .border-gray-200 { border-color: #4a5568; }
         .dark .bg-gray-100 { background-color: #2d3748; }
+        
+        /* Styles pour les formulaires en mode sombre */
+        .dark input[type="text"],
+        .dark input[type="date"],
+        .dark input[type="email"],
+        .dark input[type="password"],
+        .dark select,
+        .dark textarea {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+
+        .dark input[type="text"]:focus,
+        .dark input[type="date"]:focus,
+        .dark input[type="email"]:focus,
+        .dark input[type="password"]:focus,
+        .dark select:focus,
+        .dark textarea:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
+        .dark label {
+            color: #e2e8f0;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-full">
@@ -49,11 +75,12 @@
                         '/etudiants' => 'Étudiants',
                         '/promotions' => 'Promotions',
                         '/sanctions' => 'Sanctions'
+                        
                     ];
                     foreach ($menuItems as $url => $label):
                         $isActive = ($url === '/' && $currentPage === '/') || 
                                     ($url !== '/' && strpos($currentPage, $url) === 0);
-                        $activeClass = $isActive ? 'bg-blue-700 text-white' : 'hover:bg-blue-500';
+                        $activeClass = $isActive ? 'bg-blue-700 dark:bg-blue-900 text-white' : 'hover:bg-blue-500 dark:hover:bg-blue-700';
                     ?>
                         <li>
                             <a href="<?= $url ?>" class="px-3 py-2 rounded-md text-sm font-medium <?= $activeClass ?>">
@@ -62,8 +89,8 @@
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <button id="darkModeToggle" class="ml-4 p-2 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button id="darkModeToggle" class="ml-4 p-2 rounded-full hover:bg-blue-700 dark:hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors duration-200">
+                    <svg class="w-6 h-6 text-yellow-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
