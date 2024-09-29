@@ -1,0 +1,93 @@
+J'ai créée une application PHP 8 initialisée avec composer.
+L'application n'utilise pas de framework tels que Symfony ou Laravel.
+Je souhaite créer une application basée sur une architecture MVC, utilisant l'ORM Doctrine version 3.2 . 
+J'ai la structure de dossiers suivante : 
+- public contient index.php (le point d'entrée de l'application)
+- src contient Controller, Repository, Entity, Service
+- templates contient index.html.twig
+
+Cette application permet de suivre les sanctions données aux étudiants des étudiants de BTS SIO.
+Il y a 2 promotions  : les BTS 1ères années et les BTS 2èmes années.
+
+Le fichier index.php est le contrôleur frontal de l'application.
+Dans le dossier config se trouve les fichiers de configuration de l'application, dont la configuration de l'EntityManager.
+Je souhaite que ce fichier se nomme bootstrap.php.
+Le dossier src/Entity contient les entités de l'application.
+Le dossier src/Repository contient les repositories de l'application.
+Le dossier src/Controller contient les controllers de l'application.
+Le dossier templates contient les vues de l'application.
+
+Je souhaite que tu crées les éléments suivants :
+
+1. une page qui liste les sanctions pour une promotion donnée.
+2. une page qui liste les étudiants d'une promotion donnée.
+3. une page qui liste les sanctions d'un étudiant donné.
+4. une page qui permet d'ajouter une sanction à un étudiant.
+5. une page d'accueil   
+Chaque page devra être stylisée avec tailwindcss et comporter un menu en haut de page et un footer en bas de page.
+
+Toutes ces pages devront être accessible depuis le menu en haut de page.
+Le look de l'application devra être sympa et moderne.
+Une sanction est caractérisée par : 
+- la date de la sanction
+- la description de la sanction
+- l'étudiant sanctionné
+- le professeur qui a donné la sanction
+- la raison de la sanction
+- le professeur qui a donné la sanction
+
+Un étudiant est caractérisé par : 
+- son nom
+- son prénom
+- sa promotion (BTS 1ère année ou BTS 2ème année)
+
+Une promotion est caractérisée par : 
+- l'année de la promotion (exemple : 2024)
+- le nom de la promotion (exemple : BTS SIO 1ère année) 
+
+Un professeur est caractérisé par : 
+- son nom
+- son prénom
+
+Je souhaite que tu crées les entités suivantes : 
+- Sanction
+- Etudiant
+- Promotion
+- Professeur
+
+Je souhaite que tu crées les repositories suivants : 
+- SanctionRepository
+- EtudiantRepository
+- PromotionRepository
+- ProfesseurRepository  
+
+Je souhaite que tu crées les services suivants : 
+- SanctionService
+- EtudiantService 
+- PromotionService  
+- ProfesseurService
+
+Je souhaite que tu crées les controllers suivants : 
+- SanctionController
+- EtudiantController
+- PromotionController
+- ProfesseurController
+- HomeController
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
