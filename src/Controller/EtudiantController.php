@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class EtudiantController {
     private $etudiantService;
@@ -156,6 +157,44 @@ class EtudiantController {
         
         $content = render('etudiants/edit', [
             'etudiant' => $etudiant,
+            'promotions' => $promotions,
+        ]);
+        
+        return new Response($content);
+    }
+
+    /**
+     * @Route("/etudiants/import", name="import_etudiants", methods={"GET", "POST"})
+     */
+    public function import(Request $request): Response
+    {
+        if ($request->isMethod('POST')) {
+            /** @var UploadedFile $csvFile */
+            $csvFile = $request->files->get('csv_file');
+            $promotionId = $request->request->get('promotion_id');
+
+            if ($csvFile && $promotionId) {
+                $promotion = $this->promotionService->getPromotionById($promotionId);
+                
+                if (!$promotion) {
+                    // Gérer l'erreur si la promotion n'existe pas
+                    return new Response('Promotion non trouvée', Response::HTTP_BAD_REQUEST);
+                }
+
+                $importedCount = $this->etudiantService->importFromCsv($csvFile, $promotion);
+
+                // Rediriger vers la liste des étudiants avec un message de succès
+                header('Location: /etudiants?message=' . urlencode($importedCount . ' étudiants importés avec succès'));
+                exit;
+            } else {
+                // Gérer l'erreur si le fichier ou la promotion n'est pas fourni
+                return new Response('Fichier CSV ou promotion manquant', Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        // Afficher le formulaire d'importation
+        $promotions = $this->promotionService->getAllPromotions();
+        $content = render('etudiants/import', [
             'promotions' => $promotions,
         ]);
         
