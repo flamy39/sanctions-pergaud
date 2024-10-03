@@ -15,5 +15,14 @@ class SanctionRepository extends EntityRepository {
           ->getResult();
   }
 
+  public function findRecentSanctions(int $limit): array
+  {
+      return $this->createQueryBuilder('s')
+          ->orderBy('s.date', 'DESC')
+          ->setMaxResults($limit)
+          ->getQuery()
+          ->getResult();
+  }
+
   // ... autres méthodes
 }

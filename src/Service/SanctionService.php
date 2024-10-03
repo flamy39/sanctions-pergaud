@@ -41,5 +41,10 @@ class SanctionService {
         $this->entityManager->flush();
     }
 
+    public function getRecentSanctions(int $limit): array
+    {
+        return $this->sanctionRepository->findRecentSanctions($limit);
+    }
+
     // Autres méthodes...
 }

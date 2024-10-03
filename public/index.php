@@ -30,6 +30,7 @@ try {
     // Récupération du contrôleur et de l'action
     $controller = $parameters['_controller'];
     $action = $parameters['_action'];
+   
     // Création de l'instance du contrôleur
     $controllerInstance = new $controller($entityManager);
 
