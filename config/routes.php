@@ -55,8 +55,6 @@ $routes->add('list_promotions', new Route('/promotions', [
     '_action' => 'list'
 ]));
 
-
-
 $routes->add('show_promotion', new Route('/promotions/{id} ', [
     '_controller' => 'App\Controller\PromotionController',
     '_action' => 'show'
@@ -72,6 +70,21 @@ $routes->add('edit_etudiant', new Route('/etudiants/edit/{id}', [
     '_action' => 'edit'
 ]));
 
+// Ajoutez cette ligne avec les autres routes
+$routes->add('register', new Route('/register', [
+    '_controller' => 'App\Controller\AuthController',
+    '_action' => 'register'
+]));
 
+// Ajoutez ces lignes avec les autres routes
+$routes->add('login', new Route('/login', [
+    '_controller' => 'App\Controller\AuthController',
+    '_action' => 'login'
+]));
+
+$routes->add('logout', new Route('/logout', [
+    '_controller' => 'App\Controller\AuthController',
+    '_action' => 'logout'
+]));
 
 return $routes;

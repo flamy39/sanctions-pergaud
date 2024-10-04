@@ -12,6 +12,29 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $entityManager = require_once __DIR__ . '/../config/bootstrap.php';
 require_once __DIR__ . '/../config/view.php';
 
+// Configuration de la session
+ini_set('session.use_only_cookies', 1);
+ini_set('session.use_strict_mode', 1);
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true
+]);
+
+session_start();
+
+// Régénérer l'ID de session à chaque requête pour plus de sécurité
+if (!isset($_SESSION['CREATED'])) {
+    $_SESSION['CREATED'] = time();
+} else if (time() - $_SESSION['CREATED'] > 1800) {
+    // Régénérer la session toutes les 30 minutes
+    session_regenerate_id(true);
+    $_SESSION['CREATED'] = time();
+}
+
 // Création de la requête à partir des variables globales
 $request = Request::createFromGlobals();
 
@@ -24,6 +47,26 @@ $routes = require __DIR__ . '/../config/routes.php';
 
 // Création du matcher d'URL
 $matcher = new UrlMatcher($routes, $context);
+
+// Vérification de l'authentification
+$publicRoutes = ['/login', '/register'];
+if (!isset($_SESSION['user_id']) && !in_array($request->getPathInfo(), $publicRoutes)) {
+    header('Location: /login');
+    exit;
+}
+
+// Vérifier si la session est expirée
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    // Si la dernière activité date de plus de 30 minutes, déconnectez l'utilisateur
+    session_unset();     // Unset $_SESSION variable for the run-time 
+    session_destroy();   // Destroy session data in storage
+    header('Location: /login');
+    exit;
+}
+
+// Mettre à jour le timestamp de dernière activité
+$_SESSION['LAST_ACTIVITY'] = time();
+
 try {
     // Tentative de correspondance de la route
     $parameters = $matcher->match($request->getPathInfo());

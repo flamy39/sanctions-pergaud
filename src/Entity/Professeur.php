@@ -71,7 +71,7 @@ class Professeur {
     public function getNom(): ?string
     {
         return $this->nom;
-       }
+    }
 
     public function setNom(string $nom): self
     {
@@ -89,5 +89,4 @@ class Professeur {
         $this->prenom = $prenom;
         return $this;
     }
-    
 }
